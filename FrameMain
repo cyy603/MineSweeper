@@ -1,0 +1,45 @@
+package minesweeper;
+
+import javax.swing.*;
+
+public class Frame extends JFrame{
+    private int InputX,InputY,InputMineCount;
+    private int x = InputX;
+    private int y = InputY;
+    private int MineCount = InputMineCount;
+
+    public Frame(int x, int y, int MineCount){
+    this.x = x; this.y = y; this.MineCount = MineCount;
+        this.setTitle("2021 CS102A Project Demo 2");
+        this.setLayout(null);
+        this.setSize(y * GridComponent.gridSize + 20, x * GridComponent.gridSize + 200);
+        this.setLocationRelativeTo(null);
+
+        Player p1 = new Player();
+        Player p2 = new Player();
+
+        controller = new GameController(p1, p2);
+        GamePanel gamePanel = new GamePanel(x, y, MineCount);
+        controller.setGamePanel(gamePanel);
+        ScoreBoard scoreBoard = new ScoreBoard(p1, p2, x, y);
+        controller.setScoreBoard(scoreBoard);
+
+        this.add(gamePanel);
+        this.add(scoreBoard);
+
+
+        JButton clickBtn = new JButton("Click");
+        clickBtn.setSize(80, 20);
+        clickBtn.setLocation(5, gamePanel.getHeight() + scoreBoard.getHeight());
+        add(clickBtn);
+        clickBtn.addActionListener(e -> {
+            String fileName = JOptionPane.showInputDialog(this, "input here");
+            System.out.println("fileName :"+fileName);
+
+//            controller.readFileData(fileName);
+//            controller.writeDataToFile(fileName);
+        });
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+}
